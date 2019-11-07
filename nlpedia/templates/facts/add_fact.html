@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+    <h3>Add Fact</h3>
+    {% if session.username %}
+    <form action="{{ url_for('content.add_fact') }}" method="post">
+        <dl>
+            <dt>Title:</dt>
+            <dd><input type="text" size="30" name="title"></dd>
+            <dt>Tags (separated by commas):</dt>
+            <dd><input type="text" size="30" name="tags"></dd>
+            <dt>Text:</dt>
+            <dd><textarea name="text" rows="5" cols="40"></textarea></dd>
+        </dl>
+        <input type="submit" value="Submit"><br>
+    </form>
+    {% else %}
+        You must be logged in to add a fact.
+    {% endif %}
+
+{% endblock %}

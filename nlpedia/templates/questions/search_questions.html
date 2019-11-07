@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+    <h3>Search Questions</h3>
+
+    <form action="{{ url_for('search.search_questions_by_title') }}" method="post">
+        <dl>
+            <dt>Title:</dt>
+            <dd><input type="text" size="30" name="title"></dd>
+        </dl>
+        <input type="submit" value="Submit"><br>
+    </form>
+
+    <form action="{{ url_for('search.search_questions_by_tag') }}" method="post">
+        <dl>
+            <dt>Tag:</dt>
+            <dd><input type="text" size="30" name="tag"></dd>
+        </dl>
+        <input type="submit" value="Submit"><br>
+    </form>
+
+    <form action="{{ url_for('search.search_questions_by_text') }}" method="post">
+        <dl>
+            <dt>Text:</dt>
+            <dd><input type="text" size="30" name="text"></dd>
+        </dl>
+        <input type="submit" value="Submit"><br>
+    </form>
+
+{% endblock %}

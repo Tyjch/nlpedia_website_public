@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+    <h3>Edit Question</h3>
+    {% if session.username %}
+    <form action="{{ url_for('content.edit_question', question_id=question_id) }}" method="post">
+        <dl>
+            <dt>Title:</dt>
+            <dd><input type="text" size="30" name="title" value="{{ title }}"></dd>
+            <dt>Tags (separated by commas):</dt>
+            <dd><input type="text" size="30" name="tags" value="{{ tags }}"></dd>
+            <dt>Text:</dt>
+            <dd><textarea name="text" rows="5" cols="40">{{ text }}</textarea></dd>
+            <dt>Answer:</dt>
+            <dd><textarea name="answer" rows="5" cols="40">{{ answer }}</textarea></dd>
+        </dl>
+        <input type="submit" value="Submit"><br>
+    </form>
+
+    {% else %}
+        You must be logged in to edit a question.
+
+    {% endif %}
+
+{% endblock %}

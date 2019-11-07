@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <a href="{{ url_for('content.add_fact') }}"><h3>Add Fact</h3></a><br>
+    <a href="{{ url_for('search.search_facts') }}"><h3>Search Facts</h3></a><br>
+
+    <ul class="posts">
+    <h3>Recently Added Facts</h3>
+      {% for row in facts %}
+        <li>
+            <a href="{{ url_for('content.view_fact', fact_id=row.fact.id) }}"><b>{{ row.fact.title }}</b></a>
+            by <a href="{{ url_for('base.profile', username=row.username) }}">{{ row.username }}</a>
+            on {{ row.fact.date }}<br>
+
+            <i>{{ ", ".join(row.tags) }}</i><br>
+
+            {{ row.fact.text|truncate() }}
+      {% else %}
+        <li>There aren't any facts yet!
+      {% endfor %}
+      </ul>
+
+{% endblock %}

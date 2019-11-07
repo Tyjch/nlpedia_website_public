@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<ul class="posts">
+  {% for row in question %}
+    <li>
+        <a href="{{ url_for('content.view_question', question_id=row.question.id) }}"><b>{{ row.question.title }}</b></a>
+
+        {# REMEMBER: Uncomment this after the experiment
+            <a href="{{ url_for('content.edit_question', question_id=row.question.id) }}">edit</a>
+            <a href="{{ url_for('content.delete_question', question_id=row.question.id) }}">delete</a><br>
+            <i>{{ ", ".join(row.tags) }}</i><br>
+            #}
+        {# REMEMBER: End of comment #}
+
+        {% if session.username %}
+        <button onclick="reveal_feedback()">Feedback</button><br>
+        <div id="feedback_div" style="display:none">
+            <a href="{{ url_for('content.feedback', primary_label='Question', node_id=row.question.id, user_feedback='LIKE') }}">Like</a>
+            <a href="{{ url_for('content.feedback', primary_label='Question', node_id=row.question.id, user_feedback='DISLIKE') }}">Disike</a><br>
+            <a href="{{ url_for('content.feedback', primary_label='Question', node_id=row.question.id, user_feedback='EASY') }}">Easy</a>
+            <a href="{{ url_for('content.feedback', primary_label='Question', node_id=row.question.id, user_feedback='HARD') }}">Hard</a><br>
+            <a href="{{ url_for('content.feedback', primary_label='Question', node_id=row.question.id, user_feedback='HELPFUL') }}">Helpful</a>
+            <a href="{{ url_for('content.feedback', primary_label='Question', node_id=row.question.id, user_feedback='UNHELPFUL') }}">Unhelpful</a><br>
+            <a href="{{ url_for('content.feedback', primary_label='Question', node_id=row.question.id, user_feedback='RELEVANT') }}">Relevant</a>
+            <a href="{{ url_for('content.feedback', primary_label='Question', node_id=row.question.id, user_feedback='IRRELEVANT') }}">Irrelevant</a><br>
+        </div>
+        {% endif %}
+        <script>
+            function reveal_feedback() {
+                var x = document.getElementById("feedback_div");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+        </script>
+
+    	<br>{{ row.question.text }}<br>
+
+        <form action="{{ url_for('content.answer_question', question_id=row.question.id) }}" method="post">
+            <dl>
+                <dt>Your Answer:</dt>
+                <dd><input type="text" size="30" name="answer"></dd>
+            </dl>
+            <input type="submit" value="Submit"><br>
+        </form>
+
+
+        <button onclick="reveal_answer()">Reveal answer</button>
+        <div id="answer_div" style="display:none">
+            {{ row.question.answer }}
+
+            {% if session.username %}
+                <p>Was your answer...</p>
+                <form action="{{ url_for('content.answer_correct', question_id=row.question.id) }}" method="post">
+                <input type="submit" value="Correct">
+            </form>
+                <form action="{{ url_for('content.answer_incorrect', question_id=row.question.id) }}" method="post">
+                <input type="submit" value="Incorrect"><br>
+            </form>
+            {% endif %}
+        </div>
+        <script>
+            function reveal_answer() {
+                var x = document.getElementById("answer_div");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+        </script>
+
+        {# REMEMBER: Uncomment this after the experiment
+            <button onclick="reveal_relationships()">Related Posts</button>
+            <div id="relationships_div" style="display:none">
+                {% include 'facts/related_facts.html' %}
+                {% include 'questions/related_questions.html' %}
+            </div>
+            <script>
+                function reveal_relationships() {
+                    var x = document.getElementById("relationships_div");
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+                    } else {
+                        x.style.display = "none";
+                    }
+                }
+            </script>
+         #}
+        {# REMEMBER: End of comment #}
+
+  {% else %}
+    <li>There aren't any questions yet!
+  {% endfor %}
+  </ul>
+
+{% endblock %}

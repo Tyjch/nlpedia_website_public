@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+    <h3>Connect Posts</h3>
+    <form action="{{ url_for('content.connect') }}" method="post">
+        <dl>
+            <dt>Label 1:</dt>
+            <dd><input type="text" size="30" name="label1"></dd>
+            <dt>ID 1:</dt>
+            <dd><input type="text" size="30" name="id1"></dd><br>
+            <dt>Label 2:</dt>
+            <dd><input type="text" size="30" name="label2"></dd>
+            <dt>ID 2:</dt>
+            <dd><input type="text" size="30" name="id2"></dd>
+        </dl>
+        <input type="submit" value="Submit"><br>
+    </form>
+
+{% endblock %}

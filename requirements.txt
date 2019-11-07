@@ -1,0 +1,14 @@
+bcrypt==3.1.6
+cffi==1.12.2
+Click==7.0
+Flask==1.0.2
+itsdangerous==0.24
+Jinja2==2.10
+MarkupSafe==1.1.1
+passlib==1.7.1
+py2neo==3.1.2
+pycparser==2.14
+six==1.10.0
+Werkzeug==0.14.1
+textacy==0.6.2
+spacy==2.0.18

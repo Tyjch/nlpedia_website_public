@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <a href="{{ url_for('content.add_question') }}"><h3>Add Question</h3></a><br>
+    <a href="{{ url_for('search.search_questions') }}"><h3>Search Questions</h3></a><br>
+
+<ul class="posts">
+<h3>Recently Added Questions</h3>
+  {% for row in questions %}
+    <li>
+        <a href="{{ url_for('content.view_question', question_id=row.question.id) }}"><b>{{ row.question.title }}</b></a>
+        {% if request.path == "/" %}
+    	by <a href="{{ url_for('profile', username=row.username) }}">{{ row.username }}</a>
+        {% endif %}
+    	on {{ row.question.date }}<br>
+
+    	<i>{{ ", ".join(row.tags) }}</i><br>
+
+    	{{ row.question.text|truncate() }}
+  {% else %}
+    <li>There aren't any questions yet!
+  {% endfor %}
+  </ul>
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<ul class="posts">
+  {% for row in fact %}
+    <li>
+        <a href="{{ url_for('content.view_fact', fact_id=row.fact.id) }}"><b>{{ row.fact.title }}</b></a>
+
+        {# REMEMBER: Uncomment this after the experiement
+            <a href="{{ url_for('content.edit_fact', fact_id=row.fact.id) }}">edit</a>
+            <a href="{{ url_for('content.delete_fact', fact_id=row.fact.id) }}">delete</a><br>
+         #}
+        {# REMEMBER: End of comment #}
+
+    	<i>{{ ", ".join(row.tags) }}</i><br>
+
+        {% if session.username %}
+        <button onclick="reveal_feedback()">Feedback</button><br>
+        <div id="feedback_div" style="display:none">
+            <a href="{{ url_for('content.feedback', primary_label='Fact', node_id=row.fact.id, user_feedback='LIKE') }}">Like</a>
+            <a href="{{ url_for('content.feedback', primary_label='Fact', node_id=row.fact.id, user_feedback='DISLIKE') }}">Disike</a><br>
+            <a href="{{ url_for('content.feedback', primary_label='Fact', node_id=row.fact.id, user_feedback='EASY') }}">Easy</a>
+            <a href="{{ url_for('content.feedback', primary_label='Fact', node_id=row.fact.id, user_feedback='HARD') }}">Hard</a><br>
+            <a href="{{ url_for('content.feedback', primary_label='Fact', node_id=row.fact.id, user_feedback='HELPFUL') }}">Helpful</a>
+            <a href="{{ url_for('content.feedback', primary_label='Fact', node_id=row.fact.id, user_feedback='UNHELPFUL') }}">Unhelpful</a><br>
+            <a href="{{ url_for('content.feedback', primary_label='Fact', node_id=row.fact.id, user_feedback='RELEVANT') }}">Relevant</a>
+            <a href="{{ url_for('content.feedback', primary_label='Fact', node_id=row.fact.id, user_feedback='IRRELEVANT') }}">Irrelevant</a><br>
+        </div>
+        {% endif %}
+        <script>
+            function reveal_feedback() {
+                var x = document.getElementById("feedback_div");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+        </script>
+
+    	{{ row.fact.text }}
+
+        {# REMEMBER: Uncomment this after the experiment
+            <button onclick="reveal_relationships()">Related Posts</button>
+            <div id="relationships_div" style="display:none">
+                {% include 'facts/related_facts.html' %}
+                {% include 'questions/related_questions.html' %}
+            </div>
+            <script>
+                function reveal_relationships() {
+                    var x = document.getElementById("relationships_div");
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+                    } else {
+                        x.style.display = "none";
+                    }
+                }
+            </script>
+         #}
+        {# REMEMBER: End of comment #}
+
+  {% else %}
+    <li>There aren't any facts yet!
+  {% endfor %}
+  </ul>
+
+{% endblock %}
